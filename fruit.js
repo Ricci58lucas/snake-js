@@ -2,6 +2,16 @@ function Fruit(){
     this.x;
     this.y;
 
+    this.draw = function(){
+
+        ctx.fillStyle = "#000000"; //pintamos el "borde" de negro
+        ctx.fillRect(this.x, this.y, scale, scale);
+
+        ctx.fillStyle = "#e00f0f"; //seteamos el color de la fruta de rojo
+        ctx.fillRect(this.x, this.y, scale - 2, scale - 2); //dibujamos la fruta en la posicion random
+
+    }
+
     this.pickFoodLocation = function(tail) {
         do{ //mientras exista una colision...
             collision = false;
@@ -17,15 +27,5 @@ function Fruit(){
                 }
             }
         }while(collision);
-    }
-
-    this.draw = function(){
-
-        ctx.fillStyle = "#000000"; //pintamos el "borde" de negro
-        ctx.fillRect(this.x, this.y, scale, scale);
-
-        ctx.fillStyle = "#e00f0f"; //seteamos el color de la fruta de rojo
-        ctx.fillRect(this.x, this.y, scale - 2, scale - 2); //dibujamos la fruta en la posicion random
-
     }
 }

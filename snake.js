@@ -1,10 +1,10 @@
 function Snake(){
     this.x = canvas.width / 2;
     this.y = canvas.height / 2;
-    this.xSpeed = scale * 1;
+    this.xSpeed = 0;
     this.ySpeed = 0;
-    currentDir = "RIGHT";
-    this.total = 3;
+    this.currentDir = "RIGHT";
+    this.total = 0;
     this.tail = [];
 
     this.draw = function(){
@@ -24,12 +24,14 @@ function Snake(){
     }
 
     this.update = function(){
-        //se hace un update, shifteando las posiciones de la cola por 1
+        //para que la cola "siga" a la cabeza...
         for(var i = 0; i < this.tail.length - 1; i++){
+            //hay que asignar la posicion (dentro del canvas) del elemento siguiente al anterior
+            //de esta forma, el elemento "anterior" adopatara la posiscion de su consiguiente dentro del canvas
             this.tail[i] = this.tail[i+1];
         }
 
-        //gaurdamos coordenadas en un array (total de la cola menos la cabeza)
+        //guardamos las coordenadas de la cabeza al final del array
         this.tail[this.total - 1] = { x: this.x, y: this.y };
 
         //se suma la velocidad a la posicion
@@ -42,44 +44,46 @@ function Snake(){
             case 'Up':
                 if(this.currentDir != "DOWN"){
                     this.xSpeed = 0;
-                    this.ySpeed = -scale * 1;
+                    this.ySpeed = -scale; //y-- es arriba
                     this.currentDir = "UP";
                 }
             break;
             case 'Down':
                 if(this.currentDir != "UP"){
                     this.xSpeed = 0;
-                    this.ySpeed = scale * 1;
+                    this.ySpeed = scale; //y++ es abajo
                     this.currentDir = "DOWN";
                 }
             break;
             case 'Left':
                 if(this.currentDir != "RIGHT"){
-                    this.xSpeed = -scale * 1;
+                    this.xSpeed = -scale; //x-- es izquierda
                     this.ySpeed = 0;
                     this.currentDir = "LEFT";
                 }
             break;
             case 'Right':
                 if(this.currentDir != "LEFT"){
-                    this.xSpeed = scale * 1;
+                    this.xSpeed = scale; //x++ es derecha
                     this.ySpeed = 0;
                     this.currentDir = "RIGHT";
                 }
             break;
+            //c++ es lo mejor que hay!
         }
     }
 
     this.eat = function(fruit){
+        //comprobamos que la cabeza este donde esta la fruta
         if(this.x === fruit.x && this.y === fruit.y) {
-            this.total++;
+            this.total++; //sumamos 1 la total (es decir, nos alargamos)
             return true;
         } else{
             return false;
         }
     }
 
-    this.checkCollision = function(){
+    this.checkAnyCollision = function(){
         for(var i = 0; i < this.tail.length; i++){
             //se comprueba si la pos de la cabeza choca con el cuerpo
             if(this.x === this.tail[i].x && this.y === this.tail[i].y) {
@@ -90,26 +94,23 @@ function Snake(){
         if(this.x >= canvas.width){
             this.endGame();
         }
-
         if(this.y >= canvas.height){
             this.endGame();
         }
-
-        if(this.x <= 0){
+        if(this.x < 0){
             this.endGame();
         }
-
-        if(this.y <= 0){
+        if(this.y < 0){
             this.endGame();
         }
         //
     }
 
-    this.endGame = function(){
-        document.location.href = "";
-    }
-
     this.getTail = function(){
         return this.tail;
+    }
+
+    this.endGame = function(){
+        document.location.href = ""; //f5 reloadear la pagina
     }
 }

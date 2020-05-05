@@ -4,8 +4,6 @@ const scale = 10; //para escalar los objetos en el canvas
 const rows = canvas.height / scale; //filas del canvas
 const columns = canvas.width / scale; //columnas del canvas
 
-var snake;
-
 (function setup() {
     snake = new Snake();
     fruit = new Fruit();
@@ -19,9 +17,9 @@ var snake;
         snake.draw(); //tambien redibujamos la serpiente
 
         if(snake.eat(fruit)){ //cuando se come la fruta
-            fruit.pickFoodLocation(); //se calcula la nueva posicion de la fruta
+            fruit.pickFoodLocation(snake.getTail()); //se calcula la nueva posicion de la fruta
         }
-        snake.checkCollision(); //comprobamos si la cabeza choca con el cuerpo
+        snake.checkAnyCollision(); //comprobamos si existe alguna colision
     }, 60); //velocidad del intervalo en ms
 } ());
 
