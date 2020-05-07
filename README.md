@@ -1,7 +1,7 @@
 # snakeGame_w_JS
 Snake Game with js, this code will be used to start training an AI so it can play snake and, hopefully, win. Or at least get good at it.
 
-you can play it from here: https://ricci58lucas.github.io/snakeGame_w_JS/
+you can play it from here: https://ricci58lucas.github.io/snakeGame/
 
 Known bugs:
 
