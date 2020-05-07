@@ -3,7 +3,7 @@ function Snake(){
     this.y = canvas.height / 2;
     this.xSpeed = 0;
     this.ySpeed = 0;
-    this.currentDir = "RIGHT";
+    this.currentDir = "";
     this.total = 0;
     this.tail = [];
 
@@ -69,7 +69,7 @@ function Snake(){
                     this.currentDir = "RIGHT";
                 }
             break;
-            //c++ es lo mejor que hay!
+            //c++
         }
     }
 

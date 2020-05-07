@@ -3,6 +3,7 @@ const ctx = canvas.getContext("2d"); //para dibujar objetos 2d
 const scale = 10; //para escalar los objetos en el canvas
 const rows = canvas.height / scale; //filas del canvas
 const columns = canvas.width / scale; //columnas del canvas
+var dir;
 
 (function setup() {
     snake = new Snake();
@@ -15,6 +16,7 @@ const columns = canvas.width / scale; //columnas del canvas
         fruit.draw(); //redibujamos la fruta
         snake.update(); //actualizamos los valores de la serpiente
         snake.draw(); //tambien redibujamos la serpiente
+        snake.changeDirection(dir); //se envia la direccion para comprobar
 
         if(snake.eat(fruit)){ //cuando se come la fruta
             fruit.pickFoodLocation(snake.getTail()); //se calcula la nueva posicion de la fruta
@@ -23,7 +25,6 @@ const columns = canvas.width / scale; //columnas del canvas
     }, 60); //velocidad del intervalo en ms
 } ());
 
-window.addEventListener('keydown', ((evt) => { //detecta que tecla de presiono
-    const direction = evt.key.replace('Arrow', ''); //detectamos que tecla se presiona
-    snake.changeDirection(direction); //se envia la direccion para comprobar
+window.addEventListener('keydown', ((evt) => {
+    dir = evt.key.replace('Arrow', ''); //detectamos que tecla se presiona
 }))
