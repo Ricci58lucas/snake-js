@@ -1,116 +1,121 @@
-function Snake(){
-    this.x = canvas.width / 2;
-    this.y = canvas.height / 2;
-    this.xSpeed = 0;
-    this.ySpeed = 0;
-    this.currentDir = "";
-    this.total = 0;
-    this.tail = [];
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 
-    this.draw = function(){
-        for(let i = 0; i < this.tail.length; i++){ //recorremos la cola
-            this.drawRect_With_Border(this.tail[i].x, this.tail[i].y, scale, scale, 2, "#0b9e11");
-        }
-        this.drawRect_With_Border(this.x, this.y, scale, scale, 2, "#0b9e11");
-    }
+class Snake {
+	constructor() {
+		this.x = canvas.width / 2;
+		this.y = canvas.height / 2;
+		this.xSpeed = 0;
+		this.ySpeed = 0;
+		this.currentDir = '';
+		this.total = 0;
+		this.tail = [];
 
-    //para dibujar el borde, se dibuja un cuadrado negro, y otro (de otro color y mas chico) por encima
-    this.drawRect_With_Border = function(xPos, yPos, widthPos, heightPos, borderThickness, color){
-        ctx.fillStyle = "#000000"; //pintamos el "borde" de negro
-        ctx.fillRect(xPos, yPos, widthPos, heightPos);
+		// draws head and tail
+		this.draw = function() {
+			for (let i = 0; i < this.tail.length; i++) {
+				this.drawRect_with_Border(this.tail[i].x, this.tail[i].y, scale, scale, 2, '#0b9e11');
+			}
+			this.drawRect_with_Border(this.x, this.y, scale, scale, 2, '#0b9e11');
+		};
 
-        ctx.fillStyle = color; //pintamos la cola (cada cuadrado)
-        ctx.fillRect(xPos, yPos, widthPos-borderThickness, heightPos-borderThickness);
-    }
+		this.drawRect_with_Border = function(xPos, yPos, widthPos, heightPos, borderThickness, color) {
+			// paint head and tail border black
+			ctx.fillStyle = '#000000';
+			ctx.fillRect(xPos, yPos, widthPos, heightPos);
 
-    this.update = function(){
-        //para que la cola "siga" a la cabeza...
-        for(var i = 0; i < this.tail.length - 1; i++){
-            //hay que asignar la posicion (dentro del canvas) del elemento siguiente al anterior
-            //de esta forma, el elemento "anterior" adopatara la posiscion de su consiguiente dentro del canvas
-            this.tail[i] = this.tail[i+1];
-        }
+			// paint head and tail color
+			ctx.fillStyle = color;
+			ctx.fillRect(xPos, yPos, widthPos - borderThickness, heightPos - borderThickness);
+		};
 
-        //guardamos las coordenadas de la cabeza al final del array
-        this.tail[this.total - 1] = { x: this.x, y: this.y };
+		this.update = function() {
+			// updates tail square positions
+			for (let i = 0; i < this.tail.length - 1; i++) {
+				this.tail[i] = this.tail[i + 1];
+			}
 
-        //se suma la velocidad a la posicion
-        this.x += this.xSpeed;
-        this.y += this.ySpeed;
-    }
+			// once tail is updated, change head position
+			this.tail[this.total - 1] = { x: this.x, y: this.y };
 
-    this.changeDirection = function(direction){
-        switch(direction){
-            case 'Up':
-                if(this.currentDir != "DOWN"){
-                    this.xSpeed = 0;
-                    this.ySpeed = -scale; //y-- es arriba
-                    this.currentDir = "UP";
-                }
-            break;
-            case 'Down':
-                if(this.currentDir != "UP"){
-                    this.xSpeed = 0;
-                    this.ySpeed = scale; //y++ es abajo
-                    this.currentDir = "DOWN";
-                }
-            break;
-            case 'Left':
-                if(this.currentDir != "RIGHT"){
-                    this.xSpeed = -scale; //x-- es izquierda
-                    this.ySpeed = 0;
-                    this.currentDir = "LEFT";
-                }
-            break;
-            case 'Right':
-                if(this.currentDir != "LEFT"){
-                    this.xSpeed = scale; //x++ es derecha
-                    this.ySpeed = 0;
-                    this.currentDir = "RIGHT";
-                }
-            break;
-            //c++
-        }
-    }
+			// update 'x' 'y' positions (movement)
+			this.x += this.xSpeed;
+			this.y += this.ySpeed;
+		};
 
-    this.eat = function(fruit){
-        //comprobamos que la cabeza este donde esta la fruta
-        if(this.x === fruit.x && this.y === fruit.y) {
-            this.total++; //sumamos 1 la total (es decir, nos alargamos)
-            return true;
-        } else{
-            return false;
-        }
-    }
+		this.changeDirection = function(direction) {
+			switch (direction) {
+			case 'Up':
+				if (this.currentDir != 'DOWN') {
+					this.xSpeed = 0;
+					this.ySpeed = -scale;
+					this.currentDir = 'UP';
+				}
+				break;
+			case 'Down':
+				if (this.currentDir != 'UP') {
+					this.xSpeed = 0;
+					this.ySpeed = scale;
+					this.currentDir = 'DOWN';
+				}
+				break;
+			case 'Left':
+				if (this.currentDir != 'RIGHT') {
+					this.xSpeed = -scale;
+					this.ySpeed = 0;
+					this.currentDir = 'LEFT';
+				}
+				break;
+			case 'Right':
+				if (this.currentDir != 'LEFT') {
+					this.xSpeed = scale;
+					this.ySpeed = 0;
+					this.currentDir = 'RIGHT';
+				}
+				break;
+			}
+		};
 
-    this.checkAnyCollision = function(){
-        for(var i = 0; i < this.tail.length; i++){
-            //se comprueba si la pos de la cabeza choca con el cuerpo
-            if(this.x === this.tail[i].x && this.y === this.tail[i].y) {
-                this.endGame();
-            }
-        }
-        //se comprueba si la pos de la cabeza sobrepasa algun borde
-        if(this.x >= canvas.width){
-            this.endGame();
-        }
-        if(this.y >= canvas.height){
-            this.endGame();
-        }
-        if(this.x < 0){
-            this.endGame();
-        }
-        if(this.y < 0){
-            this.endGame();
-        }
-        //
-    }
+		this.eat = function(fruit) {
+			// check if head ate fruit
+			if (this.x === fruit.x && this.y === fruit.y) {
+				this.total++;
+				return true;
+			}
+			return false;
+		};
 
-    this.getTail = function(){
-        return this.tail;
-    }
+		this.checkAnyCollision = function() {
+			// ckeck if head hit tail
+			for (let i = 0; i < this.tail.length; i++) {
+				if (this.x === this.tail[i].x && this.y === this.tail[i].y) {
+					return true;
+				}
+			}
 
-    this.endGame = function(){
-        document.location.href = ""; //f5 reloadear la pagina
-    }
+			// check if head hit canvas border
+			if (this.x >= canvas.width) {
+				return true;
+			}
+			if (this.y >= canvas.height) {
+				return true;
+			}
+			if (this.x < 0) {
+				return true;
+			}
+			if (this.y < 0) {
+				return true;
+			}
+			//
+		};
+
+		this.endGame = function() {
+			// reload page
+			document.location.href = '';
+		};
+
+		this.getTail = function() {
+			return this.tail;
+		};
+	}
 }

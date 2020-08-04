@@ -1,30 +1,43 @@
-const canvas = document.querySelector(".canvas"); //obtenemos el canvas del html
-const ctx = canvas.getContext("2d"); //para dibujar objetos 2d
-const scale = 10; //para escalar los objetos en el canvas
-const rows = canvas.height / scale; //filas del canvas
-const columns = canvas.width / scale; //columnas del canvas
-var dir;
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+
+const canvas = document.querySelector('.canvas');
+// 2d object drawing library
+const ctx = canvas.getContext('2d');
+const scale = 10;
+const rows = canvas.height / scale;
+const columns = canvas.width / scale;
+let dir;
 
 (function setup() {
-    snake = new Snake();
-    fruit = new Fruit();
-    fruit.pickFoodLocation(snake.getTail()); //elegimos la posicion inicial de la fruta, de forma random
+	snake = new Snake();
+	fruit = new Fruit();
+	// fruit location uses tail to avoid overlapping
+	fruit.pickFoodLocation(snake.getTail());
 
-    //hacemos los dibujos y actualizaciones en el intervalo de actializacion del canvas establecido
-    window.setInterval(() => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height); //actualizamos el canvas (limpiandolo)
-        fruit.draw(); //redibujamos la fruta
-        snake.update(); //actualizamos los valores de la serpiente
-        snake.draw(); //tambien redibujamos la serpiente
-        snake.changeDirection(dir); //se envia la direccion para comprobar
+	window.setInterval(() => {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		fruit.draw();
+		snake.update();
+		snake.draw();
+		snake.changeDirection(dir);
 
-        if(snake.eat(fruit)){ //cuando se come la fruta
-            fruit.pickFoodLocation(snake.getTail()); //se calcula la nueva posicion de la fruta
-        }
-        snake.checkAnyCollision(); //comprobamos si existe alguna colision
-    }, 60); //velocidad del intervalo en ms
-} ());
+		// check if snake touched fruit
+		if(snake.eat(fruit)) {
+			// if so, pick new food location
+			fruit.pickFoodLocation(snake.getTail());
+		}
+
+		if(snake.checkAnyCollision()) {
+			// reload page
+			document.location.href = '';
+		}
+
+		// set window update interval in ms
+	}, 60);
+});
 
 window.addEventListener('keydown', ((evt) => {
-    dir = evt.key.replace('Arrow', ''); //detectamos que tecla se presiona
-}))
+	// listen to arrow keys
+	dir = evt.key.replace('Arrow', '');
+}));
