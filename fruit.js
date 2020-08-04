@@ -1,13 +1,10 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-undef */
-
 class Fruit {
 	constructor() {
 		this.x;
 		this.y;
 
 		this.draw = function() {
-			// fruit border color
+			// food border color
 			ctx.fillStyle = '#000000';
 			ctx.fillRect(this.x, this.y, scale, scale);
 

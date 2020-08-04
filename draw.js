@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-undef */
-
 const canvas = document.querySelector('.canvas');
 // 2d object drawing library
 const ctx = canvas.getContext('2d');

@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-undef */
-
 class Snake {
 	constructor() {
 		this.x = canvas.width / 2;
@@ -13,6 +10,7 @@ class Snake {
 
 		// draws head and tail
 		this.draw = function() {
+			// draw head and tail green with black border
 			for (let i = 0; i < this.tail.length; i++) {
 				this.drawRect_with_Border(this.tail[i].x, this.tail[i].y, scale, scale, 2, '#0b9e11');
 			}
