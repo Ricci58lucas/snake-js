@@ -32,7 +32,7 @@ let dir;
 
 		// set window update interval in ms
 	}, 60);
-});
+}());
 
 window.addEventListener('keydown', ((evt) => {
 	// listen to arrow keys
