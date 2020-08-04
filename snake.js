@@ -14,7 +14,7 @@ class Snake {
 			for (let i = 0; i < this.tail.length; i++) {
 				this.drawRect_with_Border(this.tail[i].x, this.tail[i].y, scale, scale, 2, '#0b9e11');
 			}
-			this.drawRect_with_Border(this.x, this.y, scale, scale, 2, '#0b9e11');
+			this.drawRect_with_Border(this.x, this.y, scale, scale, 2, '#06800b');
 		};
 
 		this.drawRect_with_Border = function(xPos, yPos, widthPos, heightPos, borderThickness, color) {
