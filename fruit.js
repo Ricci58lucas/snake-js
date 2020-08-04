@@ -14,8 +14,8 @@ class Fruit {
 		};
 
 		this.pickFoodLocation = function(tail) {
+			let collision = false;
 			do {
-				collision = false;
 				// set random 'x' and 'y' values for food
 				this.x = (Math.floor(Math.random() * rows - 1) + 1) * scale;
 				this.y = (Math.floor(Math.random() * columns - 1) + 1) * scale;

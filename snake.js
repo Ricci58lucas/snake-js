@@ -95,21 +95,17 @@ class Snake {
 			if (this.x >= canvas.width) {
 				return true;
 			}
-			if (this.y >= canvas.height) {
+			else if (this.y >= canvas.height) {
 				return true;
 			}
-			if (this.x < 0) {
+			else if (this.x < 0) {
 				return true;
 			}
-			if (this.y < 0) {
+			else if (this.y < 0) {
 				return true;
 			}
-			//
-		};
 
-		this.endGame = function() {
-			// reload page
-			document.location.href = '';
+			return false;
 		};
 
 		this.getTail = function() {
