@@ -1,5 +1,3 @@
 # snakeGame_w_JS
-Snake Game with js, this code will be used to start training an AI so it can play snake and, hopefully, win. Or at least get good at it.
-
-you can try it here: 
+Snake Game with js. It is being hosted by gh-pages and you can try it here: 
 # https://ricci58lucas.github.io/snakeGame/
